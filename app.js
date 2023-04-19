@@ -8,7 +8,7 @@ const userRoutes = require('./routes/userRoutes')
 const app = express();
 
 app.use(express.json())
-app.user(useRoutes)
+app.user(userRoutes)
 // app.use(authRouter);
 // app.use(router);
 // app.use(index);
