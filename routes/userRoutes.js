@@ -15,7 +15,7 @@ router.post('/register', userController.registerUser);
 // 用户登录
 router.post('/login', userController.loginUser);
 
-router.get('/menu/list',judgeUser,judgeAuth,userController.menuList)
+    router.get('/menu/list',judgeUser,judgeAuth,userController.menuList)
 
 // 查询用户信息
 router.get('/:userId', verifyToken,userController.getUserInfo);

@@ -5,18 +5,20 @@ async function judgeUser(req, res, next) {
     const token = req.headers['x-access-token'];
     const username = req.headers['username']
     if (!token || !username) {
-    } else {
-        const decoded = await JWT.decodeJWT(token)
-        if (decoded) {
-            const userId = userService.getId(username)
-            if (userId === decoded?.id) {
-                req.id = userId
-                next();
-            }
-        }
+        req.id = null
+        next();
     }
-    req.id = null
-    next();
+    try {
+        const userId = userService.getId(username)
+        const decoded = await JWT.decodeJWT(token)
+        if(userId === decoded?.id) {
+            req.id = userId
+            next();
+        }
+    } catch (error) {
+        return res.status(401).json({ message: 'Invalid token' });
+    }
+
 }
 
 module.exports = judgeUser
