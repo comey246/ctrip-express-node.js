@@ -1,16 +1,16 @@
 
 const userService = require('../services/userService')
-async function  verifyAuth(req, res, next) {
+async function  judgeAuth(req, res, next) {
     try {
         let id = req.id
         if(!id){
-            return res.status(403).json({ message: 'Invalid Authority' });
+            req.role = 'visitor'
         }else{
             const data = userService.getUser(id)
             const role = data?.role
             if(role === 'admin') {req.role = 'admin'}
             else if(role === 'normal') {req.role = 'user'}
-            else return res.status(403).json({ message: 'Invalid Authority' });
+            else {req.role = 'visitor'}
         }
         next();
     } catch (error) {
@@ -18,4 +18,4 @@ async function  verifyAuth(req, res, next) {
         return res.status(403).json({ message: 'Invalid Authority' });
     }
 }
-module.exports = verifyAuth
+module.exports = judgeAuth

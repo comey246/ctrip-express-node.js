@@ -5,7 +5,7 @@ const verifyToken = require('../middlewares/verifyToken')
 const router = express.Router();
 
 //航班列表
-router.get('/flightList',mallController.getFlightList)
+router.get('/flight/list',mallController.getFlightList)
 //航班信息
 router.get('/flight',mallController.getFlight)
 

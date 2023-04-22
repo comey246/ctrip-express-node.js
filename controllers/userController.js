@@ -102,7 +102,6 @@ async function loginUser(req, res) {
 async function getUserInfo(req, res) {
     try {
         const userId = req.params.userId;
-
         // 调用用户服务的查询用户信息方法
         const user = await userService.getUser(userId);
 
@@ -137,9 +136,7 @@ async function menuList(req,res) {
         const menuList = userService.getMenuList(role);
         const resData = {
             code: 200,
-            data: {
-                menuList
-            },
+            data: menuList,
             message: "success"
         }
         return res.json(resData);

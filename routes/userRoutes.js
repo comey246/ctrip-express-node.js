@@ -1,7 +1,8 @@
 const express = require('express');
 const userController = require('../controllers/userController');
 const verifyToken = require('../middlewares/verifyToken')
-const verifyAuth = require('../middlewares/verifyAuth')
+const judgeAuth = require('../middlewares/judgeAuth')
+const judgeUser = require('../middlewares/judgeUser')
 // 创建用户路由
 const router = express.Router();
 
@@ -14,12 +15,12 @@ router.post('/register', userController.registerUser);
 // 用户登录
 router.post('/login', userController.loginUser);
 
-router.get('/menuList',verifyToken,verifyAuth,userController.menuList)
+router.get('/menu/list',judgeUser,judgeAuth,userController.menuList)
 
 // 查询用户信息
-router.get('/:userId', verifyToken,verifyAuth,userController.getUserInfo);
+router.get('/:userId', verifyToken,userController.getUserInfo);
 
 // 更新用户信息
-router.put('/:userId',verifyToken,verifyAuth, userController.updateUserInfo);
+router.put('/:userId',verifyToken, userController.updateUserInfo);
 
 module.exports = router;
