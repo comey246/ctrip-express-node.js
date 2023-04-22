@@ -5,10 +5,12 @@ const path = require('path')
 // const authRouter = require('./routes/auth')
 // const recordMiddleware = require('./middlewares/record')
 const userRoutes = require('./routes/userRoutes')
+const mallRoutes = require('./routes/mallRoutes')
 const app = express();
 
 app.use(express.json())
-app.user(userRoutes)
+app.use('/',userRoutes)
+app.use('/mall',mallRoutes)
 // app.use(authRouter);
 // app.use(router);
 // app.use(index);
