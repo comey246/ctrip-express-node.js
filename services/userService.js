@@ -1,11 +1,11 @@
 const { v4: uuidv4 } = require("uuid")
 const path = require('path')
 const userModel = require('../models/userModel')
-const mapModel = require('../models/mapModel')
+const mapModel = require('../models/userMapModel')
 const RSA = require('../utils/RSA')
 const JWT = require('../utils/JWT')
 
-class UserService {
+class userService {
     // 获取密钥
     static getKey(id) {
         try {
@@ -68,8 +68,9 @@ class UserService {
     }
 
     // 创建用户
-    static createUser({username, password}) {
+    static createUser(regUser) {
         try {
+            let {username,password,role} = regUser
             const hasUser = mapModel.getMap(username);
             if (hasUser){
                 return false
@@ -80,12 +81,16 @@ class UserService {
                 username,
                 password,
                 key,
-                otherInfo:"其他信息..."
+                role,
+                otherInfo: {
+                    e_mail:'xxx',
+                    mobile:'xxx'
+                }
             }
             const id  = uuidv4();
             userModel.addUser(id,userInfo);
             mapModel.addMap(username,id)
-            return true
+            return username
         } catch (err) {
             console.error('Failed to create user:', err);
             return false;
@@ -111,6 +116,16 @@ class UserService {
             return false;
         }
     }
+
+    static getMenuList(Auth){
+        try {
+            return userModel.menuList(Auth) || []
+        } catch (err) {
+            console.error(`Failed to get menuList`, err);
+            return false;
+        }
+
+    }
 }
 
-module.exports = UserService;
+module.exports = userService;

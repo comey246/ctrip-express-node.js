@@ -3,7 +3,7 @@ const path = './dataBase/userMap.json'
 // 读取 JSON 数据库文件
 const jsonData = fs.readFileSync(path);
 const database = JSON.parse(jsonData.toString());
-class mapModel{
+class userMapModel {
     // 获取所有用户
     static getAllMap = () => {
         try{
@@ -83,4 +83,4 @@ class mapModel{
 
 }
 // 使用示例
-module.exports = mapModel
+module.exports = userMapModel

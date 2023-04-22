@@ -3,6 +3,8 @@ const path = './dataBase/users.json'
 // 读取 JSON 数据库文件
 const jsonData = fs.readFileSync(path);
 const database = JSON.parse(jsonData.toString());
+const AuthJson = fs.readFileSync('./dataBase/auth.json');
+const AuthData = JSON.parse(AuthJson.toString());
 // console.log(database.users)
 class UserModel {
     // 获取所有用户数据
@@ -34,7 +36,7 @@ class UserModel {
             const res = this.saveDatabase();
             return res
         } catch (err) {
-            console.error(`Failed to add user ${user.name}:`, err);
+            console.error(`Failed to add user ${user.username}:`, err);
             return false;
         }
     }
@@ -62,6 +64,15 @@ class UserModel {
             return false;
         }
 
+    }
+    static menuList(Auth){
+        try{
+            const menuList = AuthData.menuList[Auth];
+            return menuList || []
+        }catch (err){
+            console.error(`Failed to get menuList`, err);
+            return false;
+        }
     }
    static saveDatabase = () => {
         try {
