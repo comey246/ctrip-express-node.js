@@ -134,7 +134,6 @@ async function updateUserInfo(req, res) {
 async function menuList(req,res) {
     try {
         const role = req.role;
-        console.log(role)
         const menuList = userService.getMenuList(role);
         const resData = {
             code: 200,

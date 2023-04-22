@@ -13,8 +13,7 @@ class JWT {
     }
     static async decodeJWT(token){
         try{
-            const decoded = jwt.verify(token, secretKey);
-            return decoded
+            return await jwt.verify(token, secretKey)
         } catch (err){
                 console.error('Failed to verify token:', err);
         }
