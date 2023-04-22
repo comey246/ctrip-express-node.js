@@ -1,5 +1,4 @@
 const userService = require('../services/userService');
-
 // 发送密钥对
 
 function getKey(req, res) {
@@ -33,11 +32,11 @@ function getKey(req, res) {
 // 注册用户
 function registerUser(req, res) {
     try {
-        const {username, password} = req.body;
+        const regUser = req.body;
         // 调用用户服务的注册方法
-        const user = userService.createUser({username, password});
+        const username = userService.createUser(regUser);
         let resData = {}
-        if (user) {
+        if (username) {
             resData = {
                 code: 200,
                 data:true,
@@ -72,7 +71,8 @@ async function loginUser(req, res) {
                 resData = {
                     code: 200,
                     data: {
-                        access_token:user
+                        access_token:user,
+                        username
                     },
                     message: "success"
                 }
@@ -131,10 +131,30 @@ async function updateUserInfo(req, res) {
     }
 }
 
+async function menuList(req,res) {
+    try {
+        const role = req.role;
+        console.log(role)
+        const menuList = userService.getMenuList(role);
+        const resData = {
+            code: 200,
+            data: {
+                menuList
+            },
+            message: "success"
+        }
+        return res.json(resData);
+    } catch (error) {
+        // 错误处理
+        return res.status(500).json({error: error.message});
+    }
+}
+
 module.exports = {
     getKey,
     registerUser,
     loginUser,
     getUserInfo,
     updateUserInfo,
+    menuList
 };
