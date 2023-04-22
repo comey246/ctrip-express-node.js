@@ -11,5 +11,14 @@ class JWT {
             console.error('Failed to generate token:', err);
         }
     }
+    static async decodeJWT(token){
+        try{
+            const decoded = jwt.verify(token, secretKey);
+            return decoded
+        } catch (err){
+                console.error('Failed to verify token:', err);
+        }
+    }
 }
+
 module.exports = JWT
