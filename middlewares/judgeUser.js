@@ -4,8 +4,8 @@ const userService = require('../services/userService')
 async function judgeUser(req, res, next) {
     const token = req.headers['x-access-token'];
     const username = req.headers['username']
+    req.id = null
     if (!token || !username) {
-        req.id = null
         next();
     }
     try {
@@ -13,8 +13,8 @@ async function judgeUser(req, res, next) {
         const decoded = await JWT.decodeJWT(token)
         if(userId === decoded?.id) {
             req.id = userId
-            next();
         }
+        next();
     } catch (error) {
         return res.status(401).json({ message: 'Invalid token' });
     }
