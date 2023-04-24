@@ -39,7 +39,7 @@ class userService {
     // 获取所有用户数据
     static async getUsers() {
         try {
-            return await userModel.getUsers(); // 调用 UserModel 中的方法获取用户数据
+            return mapModel.getAllMap(); // 调用 UserModel 中的方法获取用户数据
         } catch (err) {
             console.error('Failed to get users:', err);
             return [];
@@ -120,6 +120,14 @@ class userService {
             return false;
         }
 
+    }
+    static getUsersMap(){
+        try {console.log(mapModel.getAllMap())
+            return mapModel.getAllMap()|| []
+        } catch (err) {
+            console.error(`Failed to get users`, err);
+            return false;
+        }
     }
 }
 

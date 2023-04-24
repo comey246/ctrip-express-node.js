@@ -20,7 +20,6 @@ class userMapModel {
     static getMap = (username) => {
         try{
             const userId = database.map[username]
-
             return userId || null
         }catch(err){
             console.error('getMap Fail',err)

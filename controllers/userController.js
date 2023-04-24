@@ -1,4 +1,5 @@
 const userService = require('../services/userService');
+const mapModel = require("../models/userMapModel");
 // 发送密钥对
 
 function getKey(req, res) {
@@ -126,12 +127,16 @@ async function getRole(req,res){
 // 查询用户信息
 async function getUserInfo(req, res) {
     try {
-        const userId = req.params.userId;
+        const {id} = req.query;
         // 调用用户服务的查询用户信息方法
-        const user = await userService.getUser(userId);
-
+        const {key,password,...data} = await userService.getUser(id);
+        const resData = {
+            code: 200,
+            data,
+            message: "success"
+        }
         // 返回成功响应
-        return res.json({user});
+        return res.json(resData);
     } catch (error) {
         // 错误处理
         return res.status(500).json({error: error.message});
@@ -171,6 +176,25 @@ async function menuList(req,res) {
     }
 }
 
+async function getUsersMap(req,res){
+    try {
+        const role = req.role;
+        if(role === 'admin'){
+            const map = await userService.getUsers();
+            const resData = {
+                code: 200,
+                data: map,
+                message: "success"
+            }
+            return res.json(resData);
+        }
+        return res.status(401).json({error: '无管理员权限访问'});
+    } catch (error) {
+        // 错误处理
+        return res.status(500).json({error: error.message});
+    }
+}
+
 module.exports = {
     getKey,
     registerUser,
@@ -178,5 +202,6 @@ module.exports = {
     getUserInfo,
     updateUserInfo,
     menuList,
-    getRole
+    getRole,
+    getUsersMap
 };

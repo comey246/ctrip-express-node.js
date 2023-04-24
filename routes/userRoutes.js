@@ -3,6 +3,7 @@ const userController = require('../controllers/userController');
 const verifyToken = require('../middlewares/verifyToken')
 const judgeAuth = require('../middlewares/judgeAuth')
 const judgeUser = require('../middlewares/judgeUser')
+const verifyAuth =require('../middlewares/verifyAuth')
 // 创建用户路由
 const router = express.Router();
 
@@ -19,6 +20,9 @@ router.get('/menu/list',judgeUser,judgeAuth,userController.menuList)
 
 router.get('/role',judgeUser,judgeAuth,userController.getRole)
 
+router.get('/admin/user/map',verifyToken,verifyAuth,userController.getUsersMap)
+
+router.get('/admin/user',verifyToken,verifyAuth,userController.getUserInfo)
 // // 查询用户信息
 // router.get('/user/:userId', verifyToken,userController.getUserInfo);
 //
