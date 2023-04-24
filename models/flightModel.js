@@ -27,6 +27,33 @@ class flightModel{
             return null
         }
     }
+    static changeFlight(flight_number,tickets,action){
+        try{
+        switch (action){
+            case 'inc':
+                console.log(flightDatabase.flights.flight_number)
+            flightDatabase.flights[flight_number].seats_available += tickets;
+            break;
+            case 'dec':
+                flightDatabase.flights[flight_number].seats_available -= tickets;
+                break;
+        }
+        this.saveDatabase(flightDatabase,flightPath)
+            return flightDatabase.flights[flight_number]
+        }catch(err){
+            console.error('changeFlight Fail',err)
+            return null
+        }
+    }
+    static saveDatabase = (database,path) => {
+        try {
+            fs.writeFileSync(path, JSON.stringify(database, null, 2));
+            return true
+        }catch(err) {
+            console.error('save Fail',err)
+            return false
+        }
+    }
 }
 
 module.exports = flightModel

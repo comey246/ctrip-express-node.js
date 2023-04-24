@@ -15,12 +15,15 @@ router.post('/register', userController.registerUser);
 // 用户登录
 router.post('/login', userController.loginUser);
 
-    router.get('/menu/list',judgeUser,judgeAuth,userController.menuList)
+router.get('/menu/list',judgeUser,judgeAuth,userController.menuList)
 
-// 查询用户信息
-router.get('/:userId', verifyToken,userController.getUserInfo);
+router.get('/role',judgeUser,judgeAuth,userController.getRole)
 
-// 更新用户信息
-router.put('/:userId',verifyToken, userController.updateUserInfo);
+// // 查询用户信息
+// router.get('/user/:userId', verifyToken,userController.getUserInfo);
+//
+// // 更新用户信息
+// router.put('/user/:userId',verifyToken, userController.updateUserInfo);
+
 
 module.exports = router;

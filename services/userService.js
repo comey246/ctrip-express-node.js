@@ -70,7 +70,7 @@ class userService {
     // 创建用户
     static createUser(regUser) {
         try {
-            let {username,password,role} = regUser
+            let {username,password,...regForm} = regUser
             const hasUser = mapModel.getMap(username);
             if (hasUser){
                 return false
@@ -78,14 +78,9 @@ class userService {
             const key = RSA.genKey()
             password = RSA.genHashPassword(password)
             const userInfo = {
-                username,
                 password,
                 key,
-                role,
-                otherInfo: {
-                    e_mail:'xxx',
-                    mobile:'xxx'
-                }
+                ...regForm
             }
             const id  = uuidv4();
             userModel.addUser(id,userInfo);

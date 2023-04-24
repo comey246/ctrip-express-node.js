@@ -9,7 +9,7 @@ async function  judgeAuth(req, res, next) {
             const data = userService.getUser(id)
             const role = data?.role
             if(role === 'admin') {req.role = 'admin'}
-            else if(role === 'normal') {req.role = 'user'}
+            else if(role === 'user') {req.role = 'user'}
             else {req.role = 'visitor'}
         }
         next();

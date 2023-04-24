@@ -10,6 +10,7 @@ async function  verifyToken(req, res, next) {
         const userId = userService.getId(username)
         const decoded = await JWT.decodeJWT(token)
         if(userId === decoded.id) {
+            req.username = username
             req.id = userId
             next();
         }

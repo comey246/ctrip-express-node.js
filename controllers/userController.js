@@ -98,6 +98,31 @@ async function loginUser(req, res) {
     }
 }
 
+async function getRole(req,res){
+    try{
+        let data = ''
+        switch (req.role){
+            case 'admin':
+                data = 'admin'
+                break
+            case 'user':
+                data = 'user'
+                break
+            default:
+                data = 'visitor'
+                break
+        }
+        const resData = {
+            code: 200,
+            data,
+            message: "success"
+            }
+        return res.json(resData)
+    } catch (error) {
+        // 错误处理
+        return res.status(500).json({error: error.message});
+    }
+}
 // 查询用户信息
 async function getUserInfo(req, res) {
     try {
@@ -152,5 +177,6 @@ module.exports = {
     loginUser,
     getUserInfo,
     updateUserInfo,
-    menuList
+    menuList,
+    getRole
 };

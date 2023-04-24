@@ -8,5 +8,7 @@ const router = express.Router();
 router.get('/flight/list',mallController.getFlightList)
 //航班信息
 router.get('/flight',mallController.getFlight)
+//预定航班
+router.post('/flight/book',verifyToken,mallController.bookFlight)
 
 module.exports = router
