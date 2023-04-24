@@ -1,4 +1,5 @@
 const JWT = require('../utils/JWT')
+const jwt = require('jsonwebtoken')
 const userService = require('../services/userService')
 async function  verifyToken(req, res, next) {
     const token = req.headers['x-access-token'];
@@ -15,7 +16,11 @@ async function  verifyToken(req, res, next) {
             next();
         }
     } catch (error) {
-        return res.status(401).json({ message: 'Invalid token' });
+        if (error instanceof jwt.TokenExpiredError) {
+            return res.status(401).json({ message: 'Token expired' });
+        } else {
+            return res.status(401).json({ message: 'Invalid token' });
+        }
     }
 }
 module.exports = verifyToken

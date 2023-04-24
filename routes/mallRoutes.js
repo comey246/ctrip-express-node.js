@@ -10,5 +10,13 @@ router.get('/flight/list',mallController.getFlightList)
 router.get('/flight',mallController.getFlight)
 //预定航班
 router.post('/flight/book',verifyToken,mallController.bookFlight)
+//支付航班
+router.post('/flight/pay',verifyToken,mallController.payFlight)
+
+router.get('/user/order',verifyToken,mallController.getOrder)
+
+router.get('/user/orders',verifyToken,mallController.getOrders)
+
+router.get('/user/order/delete',verifyToken,mallController.deletOrder)
 
 module.exports = router

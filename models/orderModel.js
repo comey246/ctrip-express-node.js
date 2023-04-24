@@ -34,6 +34,54 @@ class orderModel {
     return null
         }
     }
+    static getOrder = (order_id)=>{
+        try{
+            return orderDatabase.orders[order_id];
+        }catch (err){
+            console.error('order get order Fail',err)
+            return null
+        }
+    }
+    static changeOrder = (order_id,order)=>{
+        try{
+            orderDatabase.orders[order_id] = order;
+            this.saveDatabase(orderDatabase,flightPath)
+            return order_id
+        }catch (err){
+            console.error('order change order Fail',err)
+            return null
+        }
+    }
+    static getMap = (id)=>{
+        try{
+            return map[id]
+        }catch (err){
+            console.error('order get orders Fail',err)
+            return null
+        }
+    }
+    static deletMap = (id,order_id)=>{
+        try{
+            const OrderId = map[id]
+            const index = OrderId.indexOf(order_id);
+            OrderId.splice(index, 1)
+            this.saveDatabase(mapDatabase,mapPath)
+            return true
+        }catch (err){
+            console.error('order get orders Fail',err)
+            return null
+        }
+    }
+    static deletOrder = (id,order_id)=>{
+        try{
+            delete orderDatabase.orders[order_id]
+            this.saveDatabase(orderDatabase,flightPath)
+            return true
+        }catch (err){
+            console.error('order get orders Fail',err)
+            return null
+        }
+    }
     static saveDatabase = (database,path) => {
         try {
             fs.writeFileSync(path, JSON.stringify(database, null, 2));

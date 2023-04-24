@@ -27,9 +27,8 @@ class flightService {
     static bookFlight = (flight_number,info) => {
         try{
             const flight = flightModel.getFlight(flight_number);
-            console.log(flight.seats_available ,info.tickets)
-            if(flight.seats_available >info.tickets ){
-                return flightModel.changeFlight(flight_number, info.tickets, 'inc')
+            if(flight.seats_available > info.tickets ){
+                return flightModel.changeFlight(flight_number, info.tickets, 'dec')
             }return null
         }catch (err){
             console.error('Failed to book flight:', err);

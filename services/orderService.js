@@ -1,16 +1,18 @@
 const orderModel = require('../models/orderModel')
 const createOrder = require('../utils/createOrder')
+const {static} = require("express");
 class orderService {
-    static createOrder = (id,username,flightNumber,flight,orderinfo) => {
+    static createOrder = (id,username,flightNumber,flight,orderInfo) => {
         try{
             const order_id = createOrder.createid()
             const order_time = createOrder.createTime()
             const type = "flight"
-            const info = {flight,phone:orderinfo.phone,idNumber:orderinfo.idNumber}
+            const info = {flight,phone:orderInfo.phone,idNumber:orderInfo.idNumber}
+            console.log(info,flight)
             const user_id = id;
             const user_name = username;
             const pay_time = "";
-            const number = info.tickets;
+            const number = orderInfo.tickets;
             const status = 100;
             const total = number*flight.price
             const order = {
@@ -33,6 +35,47 @@ class orderService {
             return [];
         }
     }
+    static payOrder = (id,username,order_id)=>{
+        try{
+            const order = orderModel.getOrder(order_id)
+            if(id===order.user_id){
+                order.pay_time = createOrder.createTime()
+                return orderModel.changeOrder(order_id,order)
+            }
+        }catch (err){
+            console.error('Failed to pay order:', err);
+            return [];
+        }
+    }
+    static getOrder = (order_id)=>{
+        try{
+            return orderModel.getOrder(order_id)
+        }catch (err){
+            console.error('Failed to get order:', err);
+            return [];
+        }
+
+    }
+    static getOrders = (id)=>{
+        try{
+            return orderModel.getMap(id)
+        }catch (err){
+            console.error('Failed to get orders:', err);
+            return [];
+        }
+
+    }
+    static deletOrder = (id,order_id)=>{
+        try{
+            const delMap = orderModel.deletMap(id,order_id)
+            const delOrder = orderModel.deletOrder(id,order_id)
+            return true
+        }catch (err){
+            console.error('Failed to delete orders:', err);
+            return [];
+        }
+    }
 }
+
 
 module.exports = orderService;

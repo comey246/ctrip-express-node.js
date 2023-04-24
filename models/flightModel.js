@@ -31,7 +31,6 @@ class flightModel{
         try{
         switch (action){
             case 'inc':
-                console.log(flightDatabase.flights.flight_number)
             flightDatabase.flights[flight_number].seats_available += tickets;
             break;
             case 'dec':
